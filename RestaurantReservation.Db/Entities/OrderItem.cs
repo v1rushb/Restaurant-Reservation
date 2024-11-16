@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace RestaurantReservation.Db.Entities
 {
     public class OrderItem
@@ -7,6 +9,9 @@ namespace RestaurantReservation.Db.Entities
         public Order? Order { get; set; }
         public int MenuItemId { get; set; }
         public MenuItem? MenuItem { get; set; }
+
+        [Required]
+        [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
 
         public override string ToString()

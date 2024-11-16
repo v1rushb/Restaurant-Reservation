@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace RestaurantReservation.Db.Entities
 {
     public class Order
@@ -8,8 +10,13 @@ namespace RestaurantReservation.Db.Entities
         public int EmployeeId { get; set; }
 
         public Employee? Employee { get; set; }
-        public DateTime OrderDate { get; set; }
-        public int TotalAmount { get; set; }
+
+        [Required]
+        public required DateTime OrderDate { get; set; }
+
+        [Required]
+        [Range(0, double.MaxValue)]
+        public required decimal TotalAmount { get; set; }
         public List<OrderItem> OrderItems { get; set; } = [];
 
         public override string ToString()

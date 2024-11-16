@@ -1,12 +1,27 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace RestaurantReservation.Db.Entities
 {
     public class Restaurant
     {
         public int RestaurantId { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string PhoneNumber { get; set; }
-        public string OpeningHours { get; set; }
+
+        [Required]
+        [MaxLength(75)]
+        public required string Name { get; set; }
+
+        [Required]
+        [MaxLength(150)]
+        public required string Address { get; set; }
+
+        [Required]
+        [Phone]
+        [MaxLength(10)]
+        public required string PhoneNumber { get; set; }
+
+        [Required]
+        [MaxLength(200)]
+        public required string OpeningHours { get; set; }
         public List<Reservation> Reservations { get; set; } = [];
 
         public List<Table> Tables { get; set; } = [];

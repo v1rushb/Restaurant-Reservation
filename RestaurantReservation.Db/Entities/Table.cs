@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace RestaurantReservation.Db.Entities
 {
     public class Table
@@ -6,7 +8,9 @@ namespace RestaurantReservation.Db.Entities
         public int RestaurantId { get; set; }
         public Restaurant? Restaurant { get; set; }
 
-        public int Capacity { get; set; }
+        [Required]
+        [Range(1, int.MaxValue)]
+        public required int Capacity { get; set; }
         public List<Reservation> Reservations { get; set; } = [];
 
         public override string ToString()

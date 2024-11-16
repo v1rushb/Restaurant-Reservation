@@ -1,11 +1,28 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace RestaurantReservation.Db.Entities {
     public class Customer {
+
         public int CustomerId { get; set; } // TODO: Id instead of CustomerId?
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public List<Reservation> Reservations { get; set; } = new List<Reservation>();
+
+        [Required]
+        [MaxLength(45)]
+        public required string FirstName { get; set; }
+        
+        [Required]
+        [MaxLength(45)]
+        public required string LastName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [MaxLength(85)]
+        public required string Email { get; set; }
+
+        [Required]
+        [Phone]
+        [MaxLength(10)]
+        public required string PhoneNumber { get; set; }
+        public List<Reservation> Reservations { get; set; } = [];
 
         public override string ToString() 
         {
