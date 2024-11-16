@@ -1,4 +1,4 @@
-namespace RestaurantReservation.Db.Repositorie.interfaces 
+namespace RestaurantReservation.Db.Repositories.interfaces 
 {
     public interface IRepository<T> where T : class 
     {
@@ -7,7 +7,6 @@ namespace RestaurantReservation.Db.Repositorie.interfaces
         Task<List<T>> GetAllAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(int Id);
-
         Task<int> GetCountAsync();
     }
 }
