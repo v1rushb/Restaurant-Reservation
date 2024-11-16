@@ -30,6 +30,7 @@ namespace RestaurantReservation.Db {
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.SeedEntities();
+            modelBuilder.OnDeleteSetNullForForeignKeys();
         }
     }
 }

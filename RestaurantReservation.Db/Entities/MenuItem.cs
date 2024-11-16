@@ -5,7 +5,7 @@ namespace RestaurantReservation.Db.Entities
     public class MenuItem
     {
         public int MenuItemId { get; set; }
-        public int RestaurantId { get; set; }
+        public int? RestaurantId { get; set; }
         public Restaurant? Restaurant { get; set; }
 
         [Required]
