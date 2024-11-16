@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations;
 namespace RestaurantReservation.Db.Entities {
     public class Reservation {
         public int ReservationId { get; set; }
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
         public Customer? Customer { get; set; }
         
-        public int RestaurantId { get; set; }
+        public int? RestaurantId { get; set; }
 
         public Restaurant? Restaurant { get; set; }
 
-        public int TableId { get; set; }
+        public int? TableId { get; set; }
         public Table? Table { get; set; }
 
         [Required]
