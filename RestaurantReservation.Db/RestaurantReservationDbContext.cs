@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Extensions;
 
@@ -24,6 +25,11 @@ namespace RestaurantReservation.Db {
                                 "Password=RootxPassw0rd;" +
                                 "Encrypt=False;");
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.SeedEntities();
         }
     }
 }
