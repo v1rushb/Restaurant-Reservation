@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
 
@@ -13,25 +13,30 @@ namespace RestaurantReservation.Db.Repositories
             _context = context;
             _context.Database.EnsureCreatedAsync().Wait();
         }
-        
-        Task<int> IRepository<Reservation>.CreateAsync(Reservation entity)
+
+        public async Task<int> CreateAsync(Reservation newReservation)
         {
-            throw new NotImplementedException();
+            var reservation = await _context.Reservations.AddAsync(newReservation);
+            return reservation.Entity.ReservationId;
         }
 
-        Task IRepository<Reservation>.DeleteAsync(int Id)
+        public async Task DeleteAsync(int Id)
         {
-            throw new NotImplementedException();
+            var reservation = await GetByIdAsync(Id);
+            _context.Reservations.Remove(reservation);
+            await _context.SaveChangesAsync();
         }
 
-        Task<List<Reservation>> IRepository<Reservation>.GetAllAsync(Reservation entity)
+        public async Task<List<Reservation>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Reservations.ToListAsync();
         }
 
-        Task<Reservation> IRepository<Reservation>.GetByIdAsync(int Id)
+        public async Task<Reservation> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            var reservation = await _context.Reservations
+                    .SingleOrDefaultAsync(reservation => reservation.ReservationId == Id);
+            return reservation;
         }
 
         Task<int> IRepository<Reservation>.GetCountAsync()
@@ -39,9 +44,10 @@ namespace RestaurantReservation.Db.Repositories
             throw new NotImplementedException();
         }
 
-        Task IRepository<Reservation>.UpdateAsync(Reservation entity)
+        public async Task UpdateAsync(Reservation updatedReservation)
         {
-            throw new NotImplementedException();
+            _context.Reservations.Update(updatedReservation);
+            await _context.SaveChangesAsync();
         }
     }
 }
