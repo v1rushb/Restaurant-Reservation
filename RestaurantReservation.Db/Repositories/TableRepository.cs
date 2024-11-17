@@ -1,4 +1,6 @@
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
 
 namespace RestaurantReservation.Db.Repositories
@@ -10,26 +12,32 @@ namespace RestaurantReservation.Db.Repositories
         public TableRepository(RestaurantReservationDbContext context)
         {
             _context = context;
+            _context.Database.EnsureCreatedAsync().Wait();
         }
 
-        Task<int> IRepository<Table>.CreateAsync(Table entity)
+        public async Task<int> CreateAsync(Table newTable)
         {
-            throw new NotImplementedException();
+            var table = await _context.Tables.AddAsync(newTable);
+            return table.Entity.TableId;
         }
 
-        Task IRepository<Table>.DeleteAsync(int Id)
+        public async Task DeleteAsync(int Id)
         {
-            throw new NotImplementedException();
+            var table = await GetByIdAsync(Id);
+            _context.Tables.Remove(table);
+            await _context.SaveChangesAsync();
         }
 
-        Task<List<Table>> IRepository<Table>.GetAllAsync(Table entity)
+        public async Task<List<Table>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Tables.ToListAsync();
         }
 
-        Task<Table> IRepository<Table>.GetByIdAsync(Table entity)
+        public async Task<Table> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            var table = await _context.Tables
+                    .SingleOrDefaultAsync(table => table.TableId == Id);
+            return table;
         }
 
         Task<int> IRepository<Table>.GetCountAsync()
@@ -37,9 +45,10 @@ namespace RestaurantReservation.Db.Repositories
             throw new NotImplementedException();
         }
 
-        Task IRepository<Table>.UpdateAsync(Table entity)
+        public async Task UpdateAsync(Table newTable)
         {
-            throw new NotImplementedException();
+            _context.Tables.Update(newTable);
+            await _context.SaveChangesAsync();
         }
     }
 }
