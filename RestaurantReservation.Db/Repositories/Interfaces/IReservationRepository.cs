@@ -5,5 +5,6 @@ namespace RestaurantReservation.Db.Repositories.interfaces
     public interface IReservationRepository : IRepository<Reservation>
     {
         Task<List<Reservation>> GetReservationsByCustomerAsync(int CustomerId);
+        Task<List<Order>> ListOrdersAndMenuItemsByReservationAsync(int ReservationId);
     }
 }
