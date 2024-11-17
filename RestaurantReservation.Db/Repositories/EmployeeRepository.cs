@@ -24,10 +24,9 @@ namespace RestaurantReservation.Db.Repositories
             var employee = await GetByIdAsync(Id);
             _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
-            
         }
 
-        public async Task<List<Employee>> GetAllAsync(Employee entity)
+        public async Task<List<Employee>> GetAllAsync()
         {
             return await _context.Employees.ToListAsync();
         }
@@ -44,9 +43,10 @@ namespace RestaurantReservation.Db.Repositories
             throw new NotImplementedException();
         }
 
-        Task IRepository<Employee>.UpdateAsync(Employee entity)
+        public async Task UpdateAsync(Employee updatedEmployee)
         {
-            throw new NotImplementedException();
+            _context.Employees.Update(updatedEmployee);
+            await _context.SaveChangesAsync();
         }
     }
 }

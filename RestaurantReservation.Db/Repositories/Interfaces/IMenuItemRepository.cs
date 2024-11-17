@@ -1,4 +1,3 @@
-using RestaurantReservation.Db.Entities;
 
 namespace RestaurantReservation.Db.Repositories.interfaces
 {

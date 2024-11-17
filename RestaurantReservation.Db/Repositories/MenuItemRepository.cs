@@ -1,34 +1,42 @@
+using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
 
 namespace RestaurantReservation.Db.Repositories
 {
-    public class MenuItem : IMenuItemRepository
+    public class MenuItemRepository : IMenuItemRepository
     {
         private readonly RestaurantReservationDbContext _context;
-        public MenuItem(RestaurantReservationDbContext context)
+        public MenuItemRepository(RestaurantReservationDbContext context)
         {
             _context = context;
             _context.Database.EnsureCreatedAsync().Wait();
         }
 
-        Task<int> IRepository<MenuItem>.CreateAsync(MenuItem entity)
+        public async Task<int> CreateAsync(MenuItem newMenuItem)
         {
-            throw new NotImplementedException();
+            var menuItem = await _context.MenuItems.AddAsync(newMenuItem);
+            return menuItem.Entity.MenuItemId;
         }
 
-        Task IRepository<MenuItem>.DeleteAsync(int Id)
+        public async Task DeleteAsync(int Id)
         {
-            throw new NotImplementedException();
+            var menuItem = await GetByIdAsync(Id);
+            _context.MenuItems.Remove(menuItem);
+            await _context.SaveChangesAsync();
         }
 
-        Task<List<MenuItem>> IRepository<MenuItem>.GetAllAsync(MenuItem entity)
+
+        async Task<List<MenuItem>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.MenuItems.ToListAsync();
         }
 
-        Task<MenuItem> IRepository<MenuItem>.GetByIdAsync(int Id)
+        public async Task<MenuItem> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            var menuItem = await _context.MenuItems
+                    .SingleOrDefaultAsync(menuItem => menuItem.MenuItemId == Id);
+            return menuItem;
         }
 
         Task<int> IRepository<MenuItem>.GetCountAsync()
@@ -36,9 +44,10 @@ namespace RestaurantReservation.Db.Repositories
             throw new NotImplementedException();
         }
 
-        Task IRepository<MenuItem>.UpdateAsync(MenuItem entity)
+        public async Task UpdateAsync(MenuItem updatedMenuItem)
         {
-            throw new NotImplementedException();
+            _context.MenuItems.Update(updatedMenuItem);
+            await _context.SaveChangesAsync();
         }
     }
 }
