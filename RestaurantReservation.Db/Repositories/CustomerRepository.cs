@@ -1,4 +1,4 @@
-using Microsoft.Identity.Client;
+using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
 
@@ -16,22 +16,32 @@ namespace RestaurantReservation.Db.Repositories
 
         public async Task<int> CreateAsync(Customer newCustomer)
         {
-
+            var customer = await _context.Customers.AddAsync(newCustomer);
+            return customer.Entity.CustomerId;
         }
 
-        public Task DeleteAsync(int Id)
+        public async Task DeleteAsync(int Id)
         {
-            throw new NotImplementedException();
+            var customer = await GetByIdAsync(Id);
+            _context.Customers.Remove(customer);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<List<Customer>> GetAllAsync(Customer entity)
+        public async Task<List<Customer>> GetAllAsync(Customer entity)
         {
-            throw new NotImplementedException();
+            return await _context.Customers.ToListAsync();
         }
 
-        public Task<Customer> GetByIdAsync(int id)
+        public async Task<Customer> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            var customer = await _context.Customers
+                    .SingleOrDefaultAsync(customer => customer.CustomerId == Id);
+                if(customer == null) 
+                {
+                    // do a CEH here
+                    throw new Exception("Yoink");
+                }
+                return customer;
         }
 
         public Task<int> GetCountAsync()
@@ -44,9 +54,10 @@ namespace RestaurantReservation.Db.Repositories
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Customer entity)
+        public async Task UpdateAsync(Customer updatedCustomer)
         {
-            throw new NotImplementedException();
+            _context.Customers.Update(updatedCustomer);
+            await _context.SaveChangesAsync();
         }
     }
 }
