@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Extensions;
+using RestaurantReservation.Db.ViewModels;
 
 namespace RestaurantReservation.Db {
     public class RestaurantReservationDbContext : DbContext 
@@ -29,6 +30,12 @@ namespace RestaurantReservation.Db {
         {
             modelBuilder.SeedEntities();
             modelBuilder.OnDeleteSetNullForForeignKeys();
+
+            modelBuilder.Entity<ReservationsWithCustomerAndRestaurants>(entity =>
+                entity.HasNoKey()
+                .ToView("vw_ReservationsWithCustomersAndRestaurants")
+            );
+
         }
     }
 }
