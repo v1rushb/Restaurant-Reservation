@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
 
@@ -13,24 +15,29 @@ namespace RestaurantReservation.Db.Repositories
             _context.Database.EnsureCreatedAsync().Wait();
         }
 
-        Task<int> IRepository<Order>.CreateAsync(Order entity)
+        async Task<int> IRepository<Order>.CreateAsync(Order newOrder)
         {
-            throw new NotImplementedException();
+            var order = await _context.Orders.AddAsync(newOrder);
+            return order.Entity.OrderId;
         }
 
-        Task IRepository<Order>.DeleteAsync(int Id)
+        public async Task DeleteAsync(int Id)
         {
-            throw new NotImplementedException();
+            var order = await GetByIdAsync(Id);
+            _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
         }
 
-        Task<List<Order>> IRepository<Order>.GetAllAsync(Order entity)
+        public async Task<List<Order>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Orders.ToListAsync();
         }
 
-        Task<Order> IRepository<Order>.GetByIdAsync(int Id)
+        public async Task<Order> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            var order = await _context.Orders
+                    .SingleOrDefaultAsync(order => order.OrderId == Id);
+            return order;
         }
 
         Task<int> IRepository<Order>.GetCountAsync()
@@ -38,9 +45,10 @@ namespace RestaurantReservation.Db.Repositories
             throw new NotImplementedException();
         }
 
-        Task IRepository<Order>.UpdateAsync(Order entity)
+        public async Task UpdateAsync(Order updatedOrder)
         {
-            throw new NotImplementedException();
+            _context.Orders.Update(updatedOrder);
+            await _context.SaveChangesAsync();
         }
     }
 }
