@@ -49,5 +49,10 @@ namespace RestaurantReservation.Db.Repositories
             _context.MenuItems.Update(updatedMenuItem);
             await _context.SaveChangesAsync();
         }
+
+        Task<List<MenuItem>> IRepository<MenuItem>.GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
