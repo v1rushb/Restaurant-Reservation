@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
 
@@ -12,24 +13,30 @@ namespace RestaurantReservation.Db.Repositories
             _context.Database.EnsureCreatedAsync().Wait();
         }
 
-        Task<int> IRepository<Employee>.CreateAsync(Employee entity)
+        public async Task<int> CreateAsync(Employee newEmployee)
         {
-            throw new NotImplementedException();
+            var employee = await _context.Employees.AddAsync(newEmployee);
+            return employee.Entity.EmployeeId;
         }
 
-        Task IRepository<Employee>.DeleteAsync(int Id)
+        public async Task DeleteAsync(int Id)
         {
-            throw new NotImplementedException();
+            var employee = await GetByIdAsync(Id);
+            _context.Employees.Remove(employee);
+            await _context.SaveChangesAsync();
+            
         }
 
-        Task<List<Employee>> IRepository<Employee>.GetAllAsync(Employee entity)
+        public async Task<List<Employee>> GetAllAsync(Employee entity)
         {
-            throw new NotImplementedException();
+            return await _context.Employees.ToListAsync();
         }
 
-        Task<Employee> IRepository<Employee>.GetByIdAsync(int Id)
+        public async Task<Employee> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            var employee = await _context.Employees
+                        .SingleOrDefaultAsync(employee => employee.EmployeeId == Id);
+            return employee;
         }
 
         Task<int> IRepository<Employee>.GetCountAsync()
