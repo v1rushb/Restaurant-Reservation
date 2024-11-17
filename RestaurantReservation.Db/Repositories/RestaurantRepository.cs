@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
 
@@ -13,9 +15,10 @@ namespace RestaurantReservation.Db.Repositories
             _context.Database.EnsureCreatedAsync().Wait();
         }
 
-        Task<int> IRepository<Restaurant>.CreateAsync(Restaurant entity)
+        public async Task<int> CreateAsync(Restaurant newRestaurant)
         {
-            throw new NotImplementedException();
+            var restaruant = await _context.Restaurants.AddAsync(newRestaurant);
+            return restaruant.Entity.RestaurantId;
         }
 
         Task IRepository<Restaurant>.DeleteAsync(int Id)
@@ -23,14 +26,16 @@ namespace RestaurantReservation.Db.Repositories
             throw new NotImplementedException();
         }
 
-        Task<List<Restaurant>> IRepository<Restaurant>.GetAllAsync(Restaurant entity)
+        public async Task<List<Restaurant>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Restaurants.ToListAsync();
         }
 
-        Task<Restaurant> IRepository<Restaurant>.GetByIdAsync(int Id)
+        public async Task<Restaurant> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            var restaurant = await _context.Restaurants
+                    .SingleOrDefaultAsync(restaurant => restaurant.RestaurantId == Id);
+            return restaurant;
         }
 
         Task<int> IRepository<Restaurant>.GetCountAsync()
@@ -38,9 +43,10 @@ namespace RestaurantReservation.Db.Repositories
             throw new NotImplementedException();
         }
 
-        Task IRepository<Restaurant>.UpdateAsync(Restaurant entity)
+        public async Task UpdateAsync(Restaurant newRestaurant)
         {
-            throw new NotImplementedException();
+            _context.Restaurants.Update(newRestaurant);
+            await _context.SaveChangesAsync();
         }
     }
 }
