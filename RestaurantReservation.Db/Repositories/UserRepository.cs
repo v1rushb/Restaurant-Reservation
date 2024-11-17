@@ -28,7 +28,7 @@ namespace RestaurantReservation.Db.Repositories
             throw new NotImplementedException();
         }
 
-        Task<User> IRepository<User>.GetByIdAsync(User entity)
+        Task<User> IRepository<User>.GetByIdAsync(int Id)
         {
             throw new NotImplementedException();
         }

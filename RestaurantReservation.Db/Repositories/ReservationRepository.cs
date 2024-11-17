@@ -29,7 +29,7 @@ namespace RestaurantReservation.Db.Repositories
             throw new NotImplementedException();
         }
 
-        Task<Reservation> IRepository<Reservation>.GetByIdAsync(Reservation entity)
+        Task<Reservation> IRepository<Reservation>.GetByIdAsync(int Id)
         {
             throw new NotImplementedException();
         }

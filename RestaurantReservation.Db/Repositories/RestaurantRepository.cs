@@ -12,7 +12,7 @@ namespace RestaurantReservation.Db.Repositories
             _context = context;
             _context.Database.EnsureCreatedAsync().Wait();
         }
-        
+
         Task<int> IRepository<Restaurant>.CreateAsync(Restaurant entity)
         {
             throw new NotImplementedException();
@@ -28,7 +28,7 @@ namespace RestaurantReservation.Db.Repositories
             throw new NotImplementedException();
         }
 
-        Task<Restaurant> IRepository<Restaurant>.GetByIdAsync(Restaurant entity)
+        Task<Restaurant> IRepository<Restaurant>.GetByIdAsync(int Id)
         {
             throw new NotImplementedException();
         }
