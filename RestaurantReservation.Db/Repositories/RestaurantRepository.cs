@@ -5,6 +5,14 @@ namespace RestaurantReservation.Db.Repositories
 {
     public class RestaurantRepository : IRestaurantRepository
     {
+        private readonly RestaurantReservationDbContext _context;
+
+        public RestaurantRepository(RestaurantReservationDbContext context)
+        {
+            _context = context;
+            _context.Database.EnsureCreatedAsync().Wait();
+        }
+        
         Task<int> IRepository<Restaurant>.CreateAsync(Restaurant entity)
         {
             throw new NotImplementedException();

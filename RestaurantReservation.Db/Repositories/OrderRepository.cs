@@ -5,6 +5,14 @@ namespace RestaurantReservation.Db.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
+        private readonly RestaurantReservationDbContext _context;
+
+        public OrderRepository(RestaurantReservationDbContext context)
+        {
+            _context = context;
+            _context.Database.EnsureCreatedAsync().Wait();
+        }
+        
         Task<int> IRepository<Order>.CreateAsync(Order entity)
         {
             throw new NotImplementedException();

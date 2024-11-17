@@ -1,3 +1,4 @@
+using Microsoft.Identity.Client;
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
 
@@ -5,6 +6,14 @@ namespace RestaurantReservation.Db.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
+        private readonly RestaurantReservationDbContext _context;
+
+        public CustomerRepository(RestaurantReservationDbContext context)
+        {
+            _context = context;
+            _context.Database.EnsureCreatedAsync().Wait();
+        }
+        
         public Task<int> CreateAsync(Customer entity)
         {
             throw new NotImplementedException();

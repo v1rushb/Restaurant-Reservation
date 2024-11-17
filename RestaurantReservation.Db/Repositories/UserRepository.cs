@@ -1,9 +1,18 @@
+using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
 
 namespace RestaurantReservation.Db.Repositories
 {
-    public class User : IUserRepository
+    public class UserRepository : IUserRepository
     {
+        private readonly RestaurantReservationDbContext _context;
+        
+        public UserRepository(RestaurantReservationDbContext context)
+        {
+            _context = context;
+            _context.Database.EnsureCreatedAsync().Wait();
+        }
+
         Task<int> IRepository<User>.CreateAsync(User entity)
         {
             throw new NotImplementedException();
