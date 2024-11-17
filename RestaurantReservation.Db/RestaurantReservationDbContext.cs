@@ -36,6 +36,11 @@ namespace RestaurantReservation.Db {
                 .ToView("vw_ReservationsWithCustomersAndRestaurants")
             );
 
+            modelBuilder.Entity<EmployeesWithRestaurants>(entity =>
+                entity.HasNoKey()
+                .ToView("vw_EmployeesWithRestaurants")
+            );
+
         }
     }
 }
