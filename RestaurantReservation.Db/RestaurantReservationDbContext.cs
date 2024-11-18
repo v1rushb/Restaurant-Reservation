@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Extensions;
+using RestaurantReservation.Db.ViewModels;
 
 namespace RestaurantReservation.Db {
     public class RestaurantReservationDbContext : DbContext 
@@ -14,8 +15,8 @@ namespace RestaurantReservation.Db {
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Table> Tables { get; set; }
-        public DbSet<User> Users { get; set; }
-
+        public DbSet<ReservationsWithCustomerAndRestaurants> ReservationsWithCustomerAndRestaurants { get; set; }
+        public DbSet<EmployeesWithRestaurants> EmployeesWithRestaurants { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if(!optionsBuilder.IsConfigured) {
@@ -31,6 +32,16 @@ namespace RestaurantReservation.Db {
         {
             modelBuilder.SeedEntities();
             modelBuilder.OnDeleteSetNullForForeignKeys();
+
+            modelBuilder.Entity<ReservationsWithCustomerAndRestaurants>(entity =>
+                entity.HasNoKey()
+                .ToView("vw_ReservationsWithCustomersAndRestaurants")
+            );
+
+            modelBuilder.Entity<EmployeesWithRestaurants>(entity =>
+                entity.HasNoKey()
+                .ToView("vw_EmployeesWithRestaurants")
+            );
         }
     }
 }

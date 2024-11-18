@@ -1,0 +1,58 @@
+using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Entities;
+using RestaurantReservation.Db.Repositories.interfaces;
+
+namespace RestaurantReservation.Db.Repositories
+{
+    public class MenuItemRepository : IMenuItemRepository
+    {
+        private readonly RestaurantReservationDbContext _context;
+        public MenuItemRepository(RestaurantReservationDbContext context)
+        {
+            _context = context;
+            _context.Database.EnsureCreatedAsync().Wait();
+        }
+
+        public async Task<int> CreateAsync(MenuItem newMenuItem)
+        {
+            var menuItem = await _context.MenuItems.AddAsync(newMenuItem);
+            return menuItem.Entity.MenuItemId;
+        }
+
+        public async Task DeleteAsync(int Id)
+        {
+            var menuItem = await GetByIdAsync(Id);
+            _context.MenuItems.Remove(menuItem);
+            await _context.SaveChangesAsync();
+        }
+
+
+        async Task<List<MenuItem>> GetAllAsync()
+        {
+            return await _context.MenuItems.ToListAsync();
+        }
+
+        public async Task<MenuItem> GetByIdAsync(int Id)
+        {
+            var menuItem = await _context.MenuItems
+                    .SingleOrDefaultAsync(menuItem => menuItem.MenuItemId == Id);
+            return menuItem;
+        }
+
+        Task<int> IRepository<MenuItem>.GetCountAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task UpdateAsync(MenuItem updatedMenuItem)
+        {
+            _context.MenuItems.Update(updatedMenuItem);
+            await _context.SaveChangesAsync();
+        }
+
+        Task<List<MenuItem>> IRepository<MenuItem>.GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
