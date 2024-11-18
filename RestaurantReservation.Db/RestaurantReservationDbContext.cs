@@ -15,6 +15,8 @@ namespace RestaurantReservation.Db {
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Table> Tables { get; set; }
+        public DbSet<ReservationsWithCustomerAndRestaurants> ReservationsWithCustomerAndRestaurants { get; set; }
+        public DbSet<EmployeesWithRestaurants> EmployeesWithRestaurants { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if(!optionsBuilder.IsConfigured) {
@@ -40,7 +42,6 @@ namespace RestaurantReservation.Db {
                 entity.HasNoKey()
                 .ToView("vw_EmployeesWithRestaurants")
             );
-
         }
     }
 }

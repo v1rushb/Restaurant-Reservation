@@ -48,5 +48,17 @@ namespace RestaurantReservation.Db.Repositories
             _context.Restaurants.Update(newRestaurant);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<decimal> GetTotalRevenueAsync(int RestaurantId)
+        {
+            var res = await _context.Restaurants
+                            .FromSqlInterpolated($"SELECT dbo.RestaurantRevenue({RestaurantId}) AS [Total Revenue]")
+                            .AsNoTracking()
+                            .Select(res => new {
+                                TotalRevenue = EF.Property<decimal>(res, "Total Revenue")
+                            })
+                            .FirstOrDefaultAsync();
+            return res?.TotalRevenue ?? 0; // idk throw exp later after doing ceh?
+        } 
     }
 }
