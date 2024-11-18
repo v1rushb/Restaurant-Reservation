@@ -59,5 +59,12 @@ namespace RestaurantReservation.Db.Repositories
             _context.Customers.Update(updatedCustomer);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Customer>> GetCustomersWithPartySizeGreateThanValueAsync(int value)
+        {
+            return await _context.Customers
+                        .FromSqlInterpolated($"EXEC GetCustomerWithPartySizeGreateThanValue {value}")
+                        .ToListAsync();
+        }
     }
 }
