@@ -14,19 +14,19 @@ namespace RestaurantReservation.Db.Migrations
             migrationBuilder.Sql(@"
                 CREATE VIEW ReservationWithCustomerAndRestaurantDetails AS
                 SELECT 
-                    r.reservation_id,
-                    r.customer_id,
-                    c.first_name AS customer_first_name,
-                    c.last_name AS customer_last_name,
-                    c.phone_number AS customer_phone,
-                    r.restaurant_id,
-                    res.name AS restaurant_name,
-                    res.address AS restaurant_address,
-                    r.reservation_date,
-                    r.table_id
+                    r.ReservationId,
+                    r.CustomerId,
+                    c.FirstName AS CustomerFirstName,
+                    c.LastName AS CustomerLastName,
+                    c.PhoneNumber AS CustomerPhone,
+                    r.RestaurantId,
+                    res.Name AS RestaurantName,
+                    res.Address AS RestaurantAddress,
+                    r.ReservationDate,
+                    r.TableId
                 FROM Reservations r
-                INNER JOIN Customers c ON r.customer_id = c.customer_id
-                INNER JOIN Restaurants res ON r.restaurant_id = res.restaurant_id;
+                INNER JOIN Customers c ON r.CustomerId = c.CustomerId
+                INNER JOIN Restaurants res ON r.RestaurantId = res.RestaurantId;
             ");
         }
 

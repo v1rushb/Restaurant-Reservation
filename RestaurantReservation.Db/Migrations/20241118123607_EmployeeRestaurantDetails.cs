@@ -13,16 +13,16 @@ namespace RestaurantReservation.Db.Migrations
             migrationBuilder.Sql(@"
                 CREATE VIEW EmployeeRestaurantDetails AS
                 SELECT 
-                    e.employee_id,
-                    e.first_name,
-                    e.last_name,
-                    e.position,
-                    e.restaurant_id,
-                    res.name AS restaurant_name,
-                    res.address AS restaurant_address,
-                    res.phone_number AS restaurant_phone
+                    e.EmployeeId,
+                    e.FirstName,
+                    e.LastName,
+                    e.Position,
+                    e.RestaurantId,
+                    res.Name AS RestaurantName,
+                    res.Address AS RestaurantAddress,
+                    res.PhoneNumber AS RestaurantPhone
                 FROM Employees e
-                INNER JOIN Restaurants res ON e.restaurant_id = res.restaurant_id;
+                INNER JOIN Restaurants res ON e.RestaurantId = res.RestaurantId;
             ");
         }
 
