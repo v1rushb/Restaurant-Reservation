@@ -1,6 +1,6 @@
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
-using RestaurantReservationCore.Service;
+using RestaurantReservationCore.Service.Interfaces;
 
 namespace RestaurantReservation.Service
 {
