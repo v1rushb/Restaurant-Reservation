@@ -20,17 +20,13 @@ namespace RestaurantReservation.Db {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if(!optionsBuilder.IsConfigured) {
-                optionsBuilder.UseSqlServer("Data Source=localhost,1433;" +
-                                "Initial Catalog=RestaurantReservationCore;" +
-                                "User Id=SA;" +
-                                "Password=RootxPassw0rd;" +
-                                "Encrypt=False;");
+                optionsBuilder.UseSqlServer(DatabaseConstants.ConnectionString);
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.SeedEntities();
+            modelBuilder.SeedEntities(); // probs handle profiling for prod and dev envs?
             modelBuilder.OnDeleteSetNullForForeignKeys();
 
             modelBuilder.Entity<ReservationsWithCustomerAndRestaurants>(entity =>
