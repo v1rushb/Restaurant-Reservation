@@ -1,4 +1,4 @@
-namespace RestaurantReservationCore.Service
+namespace RestaurantReservationCore.Service.Interfaces
 {
     public interface IService<T> where T : class
     {

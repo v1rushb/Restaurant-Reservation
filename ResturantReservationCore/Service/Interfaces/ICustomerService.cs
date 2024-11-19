@@ -1,6 +1,6 @@
 using RestaurantReservation.Db.Entities;
 
-namespace RestaurantReservationCore.Service
+namespace RestaurantReservationCore.Service.Interfaces
 {
     public interface ICustomerService : IService<Customer>
     {
