@@ -8,5 +8,6 @@ namespace RestaurantReservation.Db.Repositories.interfaces
         Task UpdateAsync(T entity);
         Task DeleteAsync(int Id);
         Task<int> GetCountAsync();
+        Task<bool> ExistsAsync(int Id);
     }
 }
