@@ -1,6 +1,8 @@
 using RestaurantReservation.Db;
+using RestaurantReservation.Db.Repositories;
 using RestaurantReservation.Db.Service;
 using RestaurantReservation.Db.Service.Interfaces;
+using RestaurantReservation.Db.Repositories.interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,10 @@ if (app.Environment.IsDevelopment())
 }
 
 builder.Services.AddScoped<RestaurantReservationDbContext>();
+
+
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 app.UseHttpsRedirection();
