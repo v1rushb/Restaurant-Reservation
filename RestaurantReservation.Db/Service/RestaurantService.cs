@@ -1,12 +1,16 @@
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
 using RestaurantReservation.Db.Service.Interfaces;
+using RestaurantReservation.Db.Utilities;
+using RestaurantReservation.Db.Utilities.Models;
 
 namespace RestaurantReservation.Db.Service
 {
     public class RestaurantService : IRestaurantService
     {
         private readonly IRestaurantRepository _restaurantRepository;
+        private readonly PaginationMetadataGenerator<Restaurant> _paginationMetadataGenerator = new();
+
 
         public RestaurantService(IRestaurantRepository restaurantRepository)
         {
@@ -22,9 +26,12 @@ namespace RestaurantReservation.Db.Service
             await _restaurantRepository.DeleteAsync(restaurantId);
         }
 
-        public async Task<List<Restaurant>> GetAllAsync(int size, int pageSize)
+        public async Task<(List<Restaurant>, Meta)> GetAllAsync(int page, int pageSize)
         {
-            return await _restaurantRepository.GetAllAsync(size, pageSize);
+            var restaurants = await _restaurantRepository.GetAllAsync(page, pageSize);
+            var metadata = _paginationMetadataGenerator.GetGeneratedMetadata(restaurants, page, pageSize);
+                
+            return (restaurants, metadata);
         }
 
         public async Task<Restaurant> GetByIdAsync(int restaurantId)
