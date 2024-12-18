@@ -1,12 +1,16 @@
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
 using RestaurantReservation.Db.Service.Interfaces;
+using RestaurantReservation.Db.Utilities;
+using RestaurantReservation.Db.Utilities.Models;
 
 namespace RestaurantReservation.Db.Service
 {
     public class ReservationService : IReservationsService
     {
         private readonly IReservationRepository _reservationRepository;
+        private readonly PaginationMetadataGenerator<Reservation> _paginationMetadataGenerator = new();
+
 
         public ReservationService(IReservationRepository reservationRepository)
         {
@@ -33,9 +37,12 @@ namespace RestaurantReservation.Db.Service
             return await _reservationRepository.GetByIdAsync(reservationId);
         }
 
-        public async Task<List<Reservation>> GetAllAsync(int size, int pageSize)
+        public async Task<(List<Reservation>, Meta)> GetAllAsync(int page, int pageSize)
         {
-            return await _reservationRepository.GetAllAsync(size, pageSize);
+            var reservations = await _reservationRepository.GetAllAsync(page, pageSize);
+            var metadata = _paginationMetadataGenerator.GetGeneratedMetadata(reservations, page, pageSize);
+                
+            return (reservations, metadata);
         }
 
         public async Task<List<Reservation>> GetReservationsByCustomerAsync(int customerId)
