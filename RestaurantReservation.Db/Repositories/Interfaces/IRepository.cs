@@ -4,7 +4,7 @@ namespace RestaurantReservation.Db.Repositories.interfaces
     {
         Task<int> CreateAsync(T entity);
         Task<T> GetByIdAsync(int Id);
-        Task<List<T>> GetAllAsync();
+        Task<List<T>> GetAllAsync(int size, int pageSize);
         Task UpdateAsync(T entity);
         Task DeleteAsync(int Id);
         Task<int> GetCountAsync();

@@ -4,6 +4,6 @@ namespace RestaurantReservation.Db.Service.Interfaces
 {
     public interface ICustomerService : IService<Customer>
     {
-        Task<List<Customer>> GetCustomerWithPartySizeGreaterThanValue(int Value);
+        Task<List<Customer>> GetCustomerWithPartySizeGreaterThanValue(int Value, int page, int pageSize);
     }
 }
