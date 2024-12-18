@@ -15,7 +15,7 @@ namespace RestaurantReservation.Db.Repositories
             _context.Database.EnsureCreatedAsync().Wait();
         }
 
-        public async Task<int> CreateAsync(Customer newCustomer)
+        public async Task<Customer> CreateAsync(Customer newCustomer)
         {
             // var existingCustomer = await GetByIdAsync(newCustomer.CustomerId);
 
@@ -25,7 +25,8 @@ namespace RestaurantReservation.Db.Repositories
             // }
 
             var customer = await _context.Customers.AddAsync(newCustomer);
-            return customer.Entity.CustomerId;
+            await _context.SaveChangesAsync();
+            return customer.Entity;
         }
 
         public async Task DeleteAsync(int Id)

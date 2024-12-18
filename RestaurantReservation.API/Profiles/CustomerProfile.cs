@@ -8,7 +8,8 @@ namespace RestaurantReservation.API.Profiles
     {
         public CustomerProfile()
         {
-            CreateMap<Customer, CustomerDTO>();
+            CreateMap<Customer, CustomerDTO>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CustomerId));
             CreateMap<CustomerWithoutIdDTO, Customer>();
         }
     }

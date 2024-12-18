@@ -8,7 +8,8 @@ namespace RestaurantReservation.API.Profiles
     {
         public EmployeeProfile()
         {
-            CreateMap<Employee, EmployeeDTO>();
+            CreateMap<Employee, EmployeeDTO>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EmployeeId));
             CreateMap<EmployeeWithoutIdDTO, Employee>();
         }
     }

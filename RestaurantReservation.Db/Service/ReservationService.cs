@@ -17,7 +17,7 @@ namespace RestaurantReservation.Db.Service
             _reservationRepository = reservationRepository;
         }
         
-        public async Task<int> CreateAsync(Reservation newReservation)
+        public async Task<Reservation> CreateAsync(Reservation newReservation)
         {
             return await _reservationRepository.CreateAsync(newReservation);
         }

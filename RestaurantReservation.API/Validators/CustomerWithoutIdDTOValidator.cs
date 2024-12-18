@@ -1,6 +1,6 @@
+using System.Data;
 using FluentValidation;
 using RestaurantReservation.API.Constants;
-using RestaurantReservation.API.Extensions;
 using RestaurantReservation.API.Models;
 
 namespace RestaurantReservation.API.Validators
@@ -10,17 +10,22 @@ namespace RestaurantReservation.API.Validators
         public CustomerWithoutIdDTOValidator()
         {
             RuleFor(customer => customer.FirstName)
-                .ValidateName();
+                .NotEmpty().WithMessage("LMAOOO")
+                .MaximumLength(45).WithMessage("First name must not exceed 45 characters.");
 
             RuleFor(customer => customer.LastName)
-                .ValidateName();
+                .NotEmpty().WithMessage("Last name is required.")
+                .MaximumLength(45).WithMessage("Last name must not exceed 45 characters.");
 
             RuleFor(customer => customer.Email)
-                .EmailAddress();
+                .NotEmpty().WithMessage("Email is required.")
+                .EmailAddress().WithMessage("Invalid Email.")
+                .MaximumLength(85).WithMessage("Email must not exceed 85 characters.");
 
             RuleFor(customer => customer.PhoneNumber)
-                .Matches(RegexPatterns.PhoneNumber)
-                .WithMessage(ErrorMessages.InvalidPhoneNumber);
+                .NotEmpty().WithMessage("Phone number is required.")
+                .Matches(RegexPatterns.PhoneNumber).WithMessage("yoink"); // make a regex later.
         }
     }
 }
+

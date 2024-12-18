@@ -17,7 +17,7 @@ namespace RestaurantReservation.Db.Service
             _tableRepository = tableRepository;
         }
 
-        public async Task<int> CreateAsync(Table newTable)
+        public async Task<Table> CreateAsync(Table newTable)
         {
             return await _tableRepository.CreateAsync(newTable);
         }

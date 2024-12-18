@@ -34,12 +34,12 @@ namespace RestaurantReservation.API.Controllers
 
             var (employees, metadata) = await _employeeService.GetAllAsync(page, pageSize);
 
-            var employeeDtos = _mapper.Map<List<CustomerDTO>>(employees);
+            var employeeDtos = _mapper.Map<List<EmployeeDTO>>(employees);
             return Ok(ApiResponseHelper.CreateSuccessResponse(employeeDtos, metadata)); 
         }
 
         [HttpGet("{employeeId}")]
-        public async Task<IActionResult> GetEmployeeAsync([FromQuery] int employeeId)
+        public async Task<IActionResult> GetEmployeeAsync(int employeeId)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace RestaurantReservation.API.Controllers
                 return NotFound(ApiResponseHelper.CreateErrorResponse<EmployeeDTO>(
                     new List<ValidationResultDTO>
                     {
-                        new ValidationResultDTO { ErrorMessage = $"Customer with ID {employeeId} was not found." }
+                        new ValidationResultDTO { ErrorMessage = $"Employee with ID {employeeId} was not found." }
                     }));    
             }
         }
@@ -63,7 +63,7 @@ namespace RestaurantReservation.API.Controllers
         {
             var validationResult = await _employeeValidator.ValidateAsync(newEmployee);
 
-            if(!validationResult.IsValid)
+            if (!validationResult.IsValid)
             {
                 return BadRequest(ApiResponseHelper.CreateErrorResponse<EmployeeDTO>(
                     validationResult.Errors.Select(err => new ValidationResultDTO
@@ -74,13 +74,13 @@ namespace RestaurantReservation.API.Controllers
                     }).ToList()));
             }
 
-            var newEmployeeId = await _employeeService.CreateAsync(_mapper.Map<Employee>(newEmployee));
+            var createdEmployee = await _employeeService.CreateAsync(_mapper.Map<Employee>(newEmployee));
 
-            var responseCustomer = _mapper.Map<Employee>(newEmployee);
-            responseCustomer.EmployeeId = newEmployeeId;
+            var responseEmployee = _mapper.Map<EmployeeDTO>(createdEmployee);
 
-            return Created($"api/customer/{newEmployeeId}", ApiResponseHelper.CreateSuccessResponse(responseCustomer));
+            return Created($"api/employees/{responseEmployee.Id}", ApiResponseHelper.CreateSuccessResponse(responseEmployee));
         }
+
 
         [HttpPut("{employeeId}")]
         public async Task<IActionResult> UpdateEmployeeAsync(
@@ -113,13 +113,13 @@ namespace RestaurantReservation.API.Controllers
                 return NotFound(ApiResponseHelper.CreateErrorResponse<EmployeeDTO>(
                     new List<ValidationResultDTO>
                     {
-                        new ValidationResultDTO { ErrorMessage = $"Customer with ID {employeeId} was not found." }
+                        new ValidationResultDTO { ErrorMessage = $"Employee with ID {employeeId} was not found." }
                     }));
             }
         }
 
         [HttpDelete("{employeeId}")]
-        public async Task<IActionResult> DeleteCustomerAsync(int employeeId)
+        public async Task<IActionResult> DeleteEmployeeAsync(int employeeId)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace RestaurantReservation.API.Controllers
                  return NotFound(ApiResponseHelper.CreateErrorResponse<string>(
                     new List<ValidationResultDTO>
                     {
-                        new ValidationResultDTO { ErrorMessage = $"Customer with ID {employeeId} was not found." }
+                        new ValidationResultDTO { ErrorMessage = $"Employee with ID {employeeId} was not found." }
                     }));
             }
         }

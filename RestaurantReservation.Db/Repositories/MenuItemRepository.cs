@@ -13,10 +13,10 @@ namespace RestaurantReservation.Db.Repositories
             _context.Database.EnsureCreatedAsync().Wait();
         }
 
-        public async Task<int> CreateAsync(MenuItem newMenuItem)
+        public async Task<MenuItem> CreateAsync(MenuItem newMenuItem)
         {
             var menuItem = await _context.MenuItems.AddAsync(newMenuItem);
-            return menuItem.Entity.MenuItemId;
+            return menuItem.Entity;
         }
 
         public async Task DeleteAsync(int Id)

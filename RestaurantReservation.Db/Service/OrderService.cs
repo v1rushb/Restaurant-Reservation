@@ -17,7 +17,7 @@ namespace RestaurantReservation.Db.Service
         {
             _orderRepository = orderRepository;
         }
-        public async Task<int> CreateAsync(Order newOrder)
+        public async Task<Order> CreateAsync(Order newOrder)
         {
             return await _orderRepository.CreateAsync(newOrder);
         }

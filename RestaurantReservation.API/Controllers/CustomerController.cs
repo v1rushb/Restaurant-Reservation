@@ -15,11 +15,13 @@ namespace RestaurantReservation.API.Controllers
         private readonly ICustomerService _customerService;
         private readonly IMapper _mapper;
         private IValidator<CustomerWithoutIdDTO> _customerValidator;
+        private readonly ILogger<CustomerController> _logger;
 
         public CustomerController(
             ICustomerService customerService,
             IMapper mapper,
-            IValidator<CustomerWithoutIdDTO> customerValidator)
+            IValidator<CustomerWithoutIdDTO> customerValidator,
+            ILogger<CustomerController> logger)
         {
             _customerService = customerService ??
                 throw new ArgumentNullException(nameof(customerService));
@@ -27,6 +29,8 @@ namespace RestaurantReservation.API.Controllers
                 throw new ArgumentNullException(nameof(mapper));
             _customerValidator = customerValidator ??
                 throw new ArgumentNullException(nameof(customerValidator));
+            _logger = logger ??
+                throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet]
@@ -62,9 +66,10 @@ namespace RestaurantReservation.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCustomerAsync(CustomerWithoutIdDTO newCustomer)
         {
+
             var validationResult = await _customerValidator.ValidateAsync(newCustomer);
 
-            if(!validationResult.IsValid)
+            if (!validationResult.IsValid)
             {
                 return BadRequest(ApiResponseHelper.CreateErrorResponse<CustomerDTO>(
                     validationResult.Errors.Select(e => new ValidationResultDTO
@@ -75,13 +80,14 @@ namespace RestaurantReservation.API.Controllers
                     }).ToList()));
             }
 
-            var newCustomerId = await _customerService.CreateAsync(_mapper.Map<Customer>(newCustomer));
-
+            var createdCustomer = await _customerService.CreateAsync(_mapper.Map<Customer>(newCustomer));
             var responseCustomer = _mapper.Map<Customer>(newCustomer);
-            responseCustomer.CustomerId = newCustomerId;
+            responseCustomer.CustomerId = createdCustomer.CustomerId;
 
-            return Created($"api/customer/{newCustomerId}", ApiResponseHelper.CreateSuccessResponse(responseCustomer));
+
+            return Created($"api/customer/{createdCustomer.CustomerId}", ApiResponseHelper.CreateSuccessResponse(responseCustomer));
         }
+
 
 
         [HttpPut("{customerId}")]

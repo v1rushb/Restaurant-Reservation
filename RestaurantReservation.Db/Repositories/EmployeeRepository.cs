@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Entities;
+using RestaurantReservation.Db.Extensions;
 using RestaurantReservation.Db.Repositories.interfaces;
 
 namespace RestaurantReservation.Db.Repositories 
@@ -13,10 +14,11 @@ namespace RestaurantReservation.Db.Repositories
             _context.Database.EnsureCreatedAsync().Wait();
         }
 
-        public async Task<int> CreateAsync(Employee newEmployee)
+        public async Task<Employee> CreateAsync(Employee newEmployee)
         {
             var employee = await _context.Employees.AddAsync(newEmployee);
-            return employee.Entity.EmployeeId;
+            await _context.SaveChangesAsync();
+            return employee.Entity;
         }
 
         public async Task DeleteAsync(int Id)
@@ -26,15 +28,19 @@ namespace RestaurantReservation.Db.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Employee>> GetAllAsync(int size, int pageSize)
+        public async Task<List<Employee>> GetAllAsync(int page, int pageSize)
         {
-            return await _context.Employees.ToListAsync();
+            return await _context
+                .Employees
+                .PaginateAsync(page, pageSize);
         }
 
         public async Task<Employee> GetByIdAsync(int Id)
         {
             var employee = await _context.Employees
                         .SingleOrDefaultAsync(employee => employee.EmployeeId == Id);
+            if(employee == null)
+                throw new KeyNotFoundException("Not found.");
             return employee;
         }
 

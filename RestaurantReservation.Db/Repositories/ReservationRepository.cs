@@ -14,10 +14,11 @@ namespace RestaurantReservation.Db.Repositories
             _context.Database.EnsureCreatedAsync().Wait();
         }
 
-        public async Task<int> CreateAsync(Reservation newReservation)
+        public async Task<Reservation> CreateAsync(Reservation newReservation)
         {
             var reservation = await _context.Reservations.AddAsync(newReservation);
-            return reservation.Entity.ReservationId;
+            await _context.SaveChangesAsync();
+            return reservation.Entity;
         }
 
         public async Task DeleteAsync(int Id)

@@ -17,7 +17,7 @@ namespace RestaurantReservation.Db.Service
             _paginationMetadataGenerator = new PaginationMetadataGenerator<Customer>();
         }
         
-        public async Task<int> CreateAsync(Customer newCustomer)
+        public async Task<Customer> CreateAsync(Customer newCustomer)
         {
             return await _customerRepository.CreateAsync(newCustomer);
         }

@@ -2,7 +2,7 @@ namespace RestaurantReservation.Db.Repositories.interfaces
 {
     public interface IRepository<T> where T : class 
     {
-        Task<int> CreateAsync(T entity);
+        Task<T> CreateAsync(T entity);
         Task<T> GetByIdAsync(int Id);
         Task<List<T>> GetAllAsync(int size, int pageSize);
         Task UpdateAsync(T entity);
