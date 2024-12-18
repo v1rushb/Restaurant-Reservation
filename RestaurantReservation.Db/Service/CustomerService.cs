@@ -1,16 +1,20 @@
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Repositories.interfaces;
 using RestaurantReservation.Db.Service.Interfaces;
+using RestaurantReservation.Db.Utilities;
+using RestaurantReservation.Db.Utilities.Models;
 
 namespace RestaurantReservation.Db.Service
 {
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly PaginationMetadataGenerator<Customer> _paginationMetadataGenerator;
 
         public CustomerService(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
+            _paginationMetadataGenerator = new PaginationMetadataGenerator<Customer>();
         }
         
         public async Task<int> CreateAsync(Customer newCustomer)
@@ -33,14 +37,17 @@ namespace RestaurantReservation.Db.Service
             return await _customerRepository.GetByIdAsync(customerId);
         }
 
-        public async Task<List<Customer>> GetAllAsync()
+        public async Task<(List<Customer>, Meta)> GetAllAsync(int page, int pageSize)
         {
-            return await _customerRepository.GetAllAsync();
+            var customers = await _customerRepository.GetAllAsync(page, pageSize);
+            var metadata = _paginationMetadataGenerator.GetGeneratedMetadata(customers, page, pageSize);
+            
+            return (customers, metadata);
         }
 
-        public async Task<List<Customer>> GetCustomerWithPartySizeGreaterThanValue(int value)
+        public async Task<List<Customer>> GetCustomerWithPartySizeGreaterThanValue(int value, int page, int pageSize)
         {
-            return await _customerRepository.GetCustomersWithPartySizeGreaterThanValueAsync(value);
+            return await _customerRepository.GetCustomersWithPartySizeGreaterThanValueAsync(value, page, pageSize);
         }
     }
 }

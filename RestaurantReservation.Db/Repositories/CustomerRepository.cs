@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Entities;
+using RestaurantReservation.Db.Extensions;
 using RestaurantReservation.Db.Repositories.interfaces;
 
 namespace RestaurantReservation.Db.Repositories
@@ -34,9 +35,10 @@ namespace RestaurantReservation.Db.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Customer>> GetAllAsync()
+        public async Task<IEnumerable<Customer>> GetAllAsync(int page, int pageSize)
         {
-            return await _context.Customers.ToListAsync();
+            return await _context.Customers
+                .PaginateAsync(page, pageSize);
         }
 
         public async Task<Customer> GetByIdAsync(int Id)
@@ -64,11 +66,11 @@ namespace RestaurantReservation.Db.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Customer>> GetCustomersWithPartySizeGreaterThanValueAsync(int value)
+        public async Task<List<Customer>> GetCustomersWithPartySizeGreaterThanValueAsync(int value, int page, int pageSize)
         {
             return await _context.Customers
                         .FromSqlInterpolated($"EXEC GetCustomerWithPartySizeGreateThanValue {value}")
-                        .ToListAsync();
+                        .PaginateAsync(page, pageSize);
         }
 
         public async Task<bool> ExistsAsync(int Id) => 
