@@ -35,7 +35,7 @@ namespace RestaurantReservation.Db.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Customer>> GetAllAsync(int page, int pageSize)
+        public async Task<List<Customer>> GetAllAsync(int page, int pageSize)
         {
             return await _context.Customers
                 .PaginateAsync(page, pageSize);

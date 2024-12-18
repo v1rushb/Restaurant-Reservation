@@ -1,11 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using RestaurantReservation.API.Common;
-using RestaurantReservation.API.Extensions;
 using RestaurantReservation.API.Models;
-using RestaurantReservation.API.Services;
 using RestaurantReservation.API.Utilities;
 using RestaurantReservation.Db.Entities;
 using RestaurantReservation.Db.Service.Interfaces;

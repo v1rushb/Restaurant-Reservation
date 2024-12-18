@@ -1,12 +1,11 @@
 using RestaurantReservation.Db;
 using RestaurantReservation.Db.Repositories;
-using RestaurantReservation.Db.Service;
-using RestaurantReservation.Db.Service.Interfaces;
 using RestaurantReservation.Db.Repositories.interfaces;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+using RestaurantReservation.Db.Service.Interfaces;
+using RestaurantReservation.Db.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
