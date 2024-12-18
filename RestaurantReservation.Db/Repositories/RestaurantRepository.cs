@@ -26,7 +26,7 @@ namespace RestaurantReservation.Db.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<Restaurant>> GetAllAsync()
+        public async Task<List<Restaurant>> GetAllAsync(int size, int pageSize)
         {
             return await _context.Restaurants.ToListAsync();
         }

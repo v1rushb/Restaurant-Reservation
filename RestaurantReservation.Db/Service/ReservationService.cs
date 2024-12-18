@@ -33,9 +33,9 @@ namespace RestaurantReservation.Db.Service
             return await _reservationRepository.GetByIdAsync(reservationId);
         }
 
-        public async Task<List<Reservation>> GetAllAsync()
+        public async Task<List<Reservation>> GetAllAsync(int size, int pageSize)
         {
-            return await _reservationRepository.GetAllAsync();
+            return await _reservationRepository.GetAllAsync(size, pageSize);
         }
 
         public async Task<List<Reservation>> GetReservationsByCustomerAsync(int customerId)

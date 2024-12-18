@@ -22,9 +22,9 @@ namespace RestaurantReservation.Db.Service
             await _menuItemRepository.DeleteAsync(menuItemId);
         }
 
-        public async Task<List<MenuItem>> GetAllAsync()
+        public async Task<List<MenuItem>> GetAllAsync(int size, int pageSize)
         {
-            return await _menuItemRepository.GetAllAsync();
+            return await _menuItemRepository.GetAllAsync(size, pageSize);
         }
 
         public async Task<MenuItem> GetByIdAsync(int menuItemId)

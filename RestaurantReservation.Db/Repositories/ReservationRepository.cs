@@ -27,7 +27,7 @@ namespace RestaurantReservation.Db.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Reservation>> GetAllAsync()
+        public async Task<List<Reservation>> GetAllAsync(int size, int pageSize)
         {
             return await _context.Reservations.ToListAsync();
         }

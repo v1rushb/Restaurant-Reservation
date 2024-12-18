@@ -22,9 +22,9 @@ namespace RestaurantReservation.Db.Service
             await _tableRepository.DeleteAsync(tableId);
         }
 
-        public async Task<List<Table>> GetAllAsync()
+        public async Task<List<Table>> GetAllAsync(int size, int pageSize)
         {
-            return await _tableRepository.GetAllAsync();
+            return await _tableRepository.GetAllAsync(size, pageSize);
         }
 
         public async Task<Table> GetByIdAsync(int tableId)

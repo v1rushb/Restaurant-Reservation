@@ -27,7 +27,7 @@ namespace RestaurantReservation.Db.Repositories
         }
 
 
-        async Task<List<MenuItem>> GetAllAsync()
+        async Task<List<MenuItem>> GetAllAsync(int size, int pageSize)
         {
             return await _context.MenuItems.ToListAsync();
         }
@@ -50,12 +50,12 @@ namespace RestaurantReservation.Db.Repositories
             await _context.SaveChangesAsync();
         }
 
-        Task<List<MenuItem>> IRepository<MenuItem>.GetAllAsync()
+        public async Task<bool> ExistsAsync(int Id) =>
+            await _context.MenuItems.AnyAsync(menuItems => menuItems.MenuItemId.Equals(Id));
+
+        Task<List<MenuItem>> IRepository<MenuItem>.GetAllAsync(int size, int pageSize)
         {
             throw new NotImplementedException();
         }
-
-        public async Task<bool> ExistsAsync(int Id) =>
-            await _context.MenuItems.AnyAsync(menuItems => menuItems.MenuItemId.Equals(Id));
     }
 }

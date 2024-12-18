@@ -23,9 +23,9 @@ namespace RestaurantReservation.Db.Service
             await _orderRepository.DeleteAsync(orderId);
         }
 
-        public async Task<List<Order>> GetAllAsync()
+        public async Task<List<Order>> GetAllAsync(int size, int pageSize)
         {
-            return await _orderRepository.GetAllAsync();
+            return await _orderRepository.GetAllAsync(size, pageSize);
         }
 
         public async Task<Order> GetByIdAsync(int orderId)
