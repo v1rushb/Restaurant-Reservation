@@ -27,7 +27,13 @@ namespace RestaurantReservation.Db.Service
         }
 
         public async Task<(List<Table>, Meta)> GetAllAsync(int page, int pageSize)
-        {using System.Data;
+        {
+            var tables = await _tableRepository.GetAllAsync(page, pageSize);
+            var metadata = _paginationMetadataGenerator.GetGeneratedMetadata(tables, page, pageSize);
+                
+            return (tables, metadata);
+        }
+
         public async Task<Table> GetByIdAsync(int tableId)
         {
             return await _tableRepository.GetByIdAsync(tableId);
@@ -38,14 +44,4 @@ namespace RestaurantReservation.Db.Service
             await _tableRepository.UpdateAsync(updatedTable);
         }
     }
-
-        Task<Table> IService<Table>.GetByIdAsync(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task IService<Table>.UpdateAsync(Table entity)
-        {
-            throw new NotImplementedException();
-        }
-    }
+}
