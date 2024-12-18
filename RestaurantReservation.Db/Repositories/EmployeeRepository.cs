@@ -57,5 +57,7 @@ namespace RestaurantReservation.Db.Repositories
                     .ThenBy(employee => employee.LastName)
                     .ToListAsync();
         }
+        public async Task<bool> ExistsAsync(int Id) =>
+            await _context.Employees.AnyAsync(employee => employee.EmployeeId.Equals(Id));
     }
 }

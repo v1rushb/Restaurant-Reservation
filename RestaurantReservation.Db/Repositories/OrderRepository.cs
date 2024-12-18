@@ -62,5 +62,8 @@ namespace RestaurantReservation.Db.Repositories
                                     .SumAsync(order => order.TotalAmount);
             return employeeOrdersSum / overAllSum;
         }
+
+        public async Task<bool> ExistsAsync(int Id) =>
+            await _context.Orders.AnyAsync(order => order.OrderId.Equals(Id));
     }
 }

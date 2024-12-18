@@ -77,5 +77,7 @@ namespace RestaurantReservation.Db.Repositories
                     .Select(orderItem => orderItem.MenuItem)
                     .ToListAsync();
         }
+        public async Task<bool> ExistsAsync(int Id) =>
+            await _context.Reservations.AnyAsync(reservation => reservation.ReservationId.Equals(Id));
     } 
 }

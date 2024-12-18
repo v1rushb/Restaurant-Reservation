@@ -59,6 +59,9 @@ namespace RestaurantReservation.Db.Repositories
                             })
                             .FirstOrDefaultAsync();
             return res?.TotalRevenue ?? 0; // idk throw exp later after doing ceh?
-        } 
+        }
+
+        public async Task<bool> ExistsAsync(int Id) =>
+            await _context.Restaurants.AnyAsync(restaurant => restaurant.RestaurantId.Equals(Id));
     }
 }

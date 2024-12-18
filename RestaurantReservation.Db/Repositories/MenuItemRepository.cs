@@ -54,5 +54,8 @@ namespace RestaurantReservation.Db.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public async Task<bool> ExistsAsync(int Id) =>
+            await _context.MenuItems.AnyAsync(menuItems => menuItems.MenuItemId.Equals(Id));
     }
 }

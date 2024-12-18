@@ -50,5 +50,7 @@ namespace RestaurantReservation.Db.Repositories
             _context.Tables.Update(newTable);
             await _context.SaveChangesAsync();
         }
+        public async Task<bool> ExistsAsync(int Id) =>
+            await _context.Tables.AnyAsync(table => table.TableId.Equals(Id));
     }
 }

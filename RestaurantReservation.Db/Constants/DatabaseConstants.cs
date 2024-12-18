@@ -7,4 +7,5 @@ namespace RestaurantReservation.Db
                                 "User Id=SA;" +
                                 "Password=RootxPassw0rd;" +
                                 "Encrypt=False;";
+    }
 }

@@ -16,12 +16,12 @@ namespace RestaurantReservation.Db.Repositories
 
         public async Task<int> CreateAsync(Customer newCustomer)
         {
-            var existingCustomer = await GetByIdAsync(newCustomer.CustomerId);
+            // var existingCustomer = await GetByIdAsync(newCustomer.CustomerId);
 
-            if(!await ExistsAsync(existingCustomer.CustomerId))
-            {
-                throw new KeyNotFoundException($"Customer with ID = {existingCustomer.CustomerId} does not exist.");
-            }
+            // if(!await ExistsAsync(existingCustomer.CustomerId))
+            // {
+            //     throw new KeyNotFoundException($"Customer with ID = {existingCustomer.CustomerId} does not exist.");
+            // }
 
             var customer = await _context.Customers.AddAsync(newCustomer);
             return customer.Entity.CustomerId;
