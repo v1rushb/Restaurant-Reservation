@@ -48,5 +48,12 @@ namespace RestaurantReservation.Db.Service
         {
             await _employeeRepository.UpdateAsync(updatedEmployee);
         }
+
+        
+        public async Task<bool> EmployeeExistsAsync(int Id) =>
+            await _employeeRepository.ExistsAsync(Id);
+        
+        public async Task<decimal> CalculateAverageOrderAmountAsync(int employeeId) =>
+            await _employeeRepository.CalculateAverageOrderAmountAsync(employeeId);
     }
 }

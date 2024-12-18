@@ -65,5 +65,15 @@ namespace RestaurantReservation.Db.Repositories
         }
         public async Task<bool> ExistsAsync(int Id) =>
             await _context.Employees.AnyAsync(employee => employee.EmployeeId.Equals(Id));
+
+        public async Task<decimal> CalculateAverageOrderAmountAsync(int EmployeeId)
+        {
+            var overAllSum = await _context.Orders
+                                    .SumAsync(order => order.TotalAmount);
+            var employeeOrdersSum = await _context.Orders
+                                    .Where(order => order.EmployeeId.Equals(EmployeeId))
+                                    .SumAsync(order => order.TotalAmount);
+            return employeeOrdersSum / overAllSum;
+        }
     }
 }

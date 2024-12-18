@@ -5,5 +5,6 @@ namespace RestaurantReservation.Db.Repositories.interfaces
     public interface IEmployeeRepository : IRepository<Employee>
     {
         Task<List<Employee>> ListManagersAsync();
+        Task<decimal> CalculateAverageOrderAmountAsync(int EmployeeId);
     }
 }
