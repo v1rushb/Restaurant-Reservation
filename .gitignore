@@ -138,3 +138,4 @@ _NCrunch*
 bin/
 
 obj/
+appsettings.json

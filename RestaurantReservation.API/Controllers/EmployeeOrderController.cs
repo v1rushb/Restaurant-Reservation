@@ -9,6 +9,7 @@ namespace RestaurantReservation.API.Controllers
 {
     [Route("api/employees")]
     [ApiController]
+    [Authorize]
     public class EmployeeOrderController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
