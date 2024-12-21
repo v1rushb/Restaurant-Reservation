@@ -14,6 +14,7 @@ namespace RestaurantReservation.Db.Extensions {
             SeedReservations(modelBuilder);
             SeedOrders(modelBuilder);
             SeedOrderItems(modelBuilder);
+            SeedUsers();
         }
 
         private static void SeedCustomers(ModelBuilder modelBuilder) {
@@ -100,6 +101,14 @@ namespace RestaurantReservation.Db.Extensions {
                 new OrderItem { OrderItemId = 3, OrderId = 3, MenuItemId = 3, Quantity = 6 },
                 new OrderItem { OrderItemId = 4, OrderId = 4, MenuItemId = 4, Quantity = 8 },
                 new OrderItem { OrderItemId = 5, OrderId = 5, MenuItemId = 5, Quantity = 5 }
+            );
+        }
+
+        private static void SeedUsers(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasData(
+                        new User { Id = 1, FirstName = "Basharx", LastName = "Herbawi", Username = "v1rushb", Password = "123456789" },
+                        new User { Id = 2, FirstName = "Omarx", LastName = "Herbawi", Username = "iherbqwi", Password = "123456789" }
             );
         }
     }
