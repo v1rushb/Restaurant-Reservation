@@ -9,5 +9,4 @@ namespace RestaurantReservation.API.Models
         [Required]
         public string Password { get; set; }
     }
-    }
 }
