@@ -13,9 +13,10 @@ namespace RestaurantReservation.API.Validators
             RuleFor(user => user.Username)
                 .Matches(RegexPatterns.Username)
                 .WithMessage(ErrorMessages.InvalidUsername)
-                .Length(Username.MinimumLength, Username.MinimumLength);
+                .Length(Username.MinimumLength, Username.MaximumLength);
 
             RuleFor(user => user.Password)
+                .NotEmpty()
                 .Length(Password.MinimumLength, Password.MaximumLength);
 
             RuleFor(user => user.FirstName)
