@@ -277,7 +277,7 @@ namespace RestaurantReservation.Db.Migrations
                         {
                             OrderId = 1,
                             EmployeeId = 1,
-                            OrderDate = new DateTime(2024, 11, 18, 2, 0, 0, 0, DateTimeKind.Local),
+                            OrderDate = new DateTime(2024, 12, 21, 2, 0, 0, 0, DateTimeKind.Local),
                             ReservationId = 1,
                             TotalAmount = 80m
                         },
@@ -285,7 +285,7 @@ namespace RestaurantReservation.Db.Migrations
                         {
                             OrderId = 2,
                             EmployeeId = 2,
-                            OrderDate = new DateTime(2024, 11, 18, 4, 0, 0, 0, DateTimeKind.Local),
+                            OrderDate = new DateTime(2024, 12, 21, 4, 0, 0, 0, DateTimeKind.Local),
                             ReservationId = 2,
                             TotalAmount = 30m
                         },
@@ -293,7 +293,7 @@ namespace RestaurantReservation.Db.Migrations
                         {
                             OrderId = 3,
                             EmployeeId = 3,
-                            OrderDate = new DateTime(2024, 11, 18, 6, 0, 0, 0, DateTimeKind.Local),
+                            OrderDate = new DateTime(2024, 12, 21, 6, 0, 0, 0, DateTimeKind.Local),
                             ReservationId = 3,
                             TotalAmount = 108m
                         },
@@ -301,7 +301,7 @@ namespace RestaurantReservation.Db.Migrations
                         {
                             OrderId = 4,
                             EmployeeId = 4,
-                            OrderDate = new DateTime(2024, 11, 18, 8, 0, 0, 0, DateTimeKind.Local),
+                            OrderDate = new DateTime(2024, 12, 21, 8, 0, 0, 0, DateTimeKind.Local),
                             ReservationId = 4,
                             TotalAmount = 200m
                         },
@@ -309,7 +309,7 @@ namespace RestaurantReservation.Db.Migrations
                         {
                             OrderId = 5,
                             EmployeeId = 5,
-                            OrderDate = new DateTime(2024, 11, 18, 10, 0, 0, 0, DateTimeKind.Local),
+                            OrderDate = new DateTime(2024, 12, 21, 10, 0, 0, 0, DateTimeKind.Local),
                             ReservationId = 5,
                             TotalAmount = 125m
                         });
@@ -417,7 +417,7 @@ namespace RestaurantReservation.Db.Migrations
                             ReservationId = 1,
                             CustomerId = 1,
                             PartySize = 4,
-                            ReservationDate = new DateTime(2024, 11, 18, 0, 0, 0, 0, DateTimeKind.Local),
+                            ReservationDate = new DateTime(2024, 12, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = 1,
                             TableId = 1
                         },
@@ -426,7 +426,7 @@ namespace RestaurantReservation.Db.Migrations
                             ReservationId = 2,
                             CustomerId = 2,
                             PartySize = 2,
-                            ReservationDate = new DateTime(2024, 11, 18, 1, 0, 0, 0, DateTimeKind.Local),
+                            ReservationDate = new DateTime(2024, 12, 21, 1, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = 2,
                             TableId = 3
                         },
@@ -435,7 +435,7 @@ namespace RestaurantReservation.Db.Migrations
                             ReservationId = 3,
                             CustomerId = 3,
                             PartySize = 6,
-                            ReservationDate = new DateTime(2024, 11, 18, 2, 0, 0, 0, DateTimeKind.Local),
+                            ReservationDate = new DateTime(2024, 12, 21, 2, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = 3,
                             TableId = 4
                         },
@@ -444,7 +444,7 @@ namespace RestaurantReservation.Db.Migrations
                             ReservationId = 4,
                             CustomerId = 4,
                             PartySize = 8,
-                            ReservationDate = new DateTime(2024, 11, 18, 3, 0, 0, 0, DateTimeKind.Local),
+                            ReservationDate = new DateTime(2024, 12, 21, 3, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = 4,
                             TableId = 5
                         },
@@ -453,7 +453,7 @@ namespace RestaurantReservation.Db.Migrations
                             ReservationId = 5,
                             CustomerId = 5,
                             PartySize = 5,
-                            ReservationDate = new DateTime(2024, 11, 18, 5, 0, 0, 0, DateTimeKind.Local),
+                            ReservationDate = new DateTime(2024, 12, 21, 5, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = 5,
                             TableId = 5
                         });
@@ -584,6 +584,57 @@ namespace RestaurantReservation.Db.Migrations
                             TableId = 5,
                             Capacity = 10,
                             RestaurantId = 4
+                        });
+                });
+
+            modelBuilder.Entity("RestaurantReservation.Db.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("Id"), new[] { "Username" });
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FirstName = "Basharx",
+                            LastName = "Herbawi",
+                            Password = "123456789",
+                            Username = "v1rushb"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FirstName = "Omarx",
+                            LastName = "Herbawi",
+                            Password = "123456789",
+                            Username = "iherbqwi"
                         });
                 });
 

@@ -6,6 +6,6 @@ namespace RestaurantReservation.Db.Service.Interfaces
     {
         Task<List<Employee>> ListManagersAsync();
         Task<bool> EmployeeExistsAsync(int employeeId);
-        Task<decimal> CalculateAverageOrderAmountAsync(int EmployeeId)
+        Task<decimal> CalculateAverageOrderAmountAsync(int EmployeeId);
     }
 }

@@ -14,7 +14,7 @@ namespace RestaurantReservation.Db.Extensions {
             SeedReservations(modelBuilder);
             SeedOrders(modelBuilder);
             SeedOrderItems(modelBuilder);
-            SeedUsers();
+            SeedUsers(modelBuilder);
         }
 
         private static void SeedCustomers(ModelBuilder modelBuilder) {
