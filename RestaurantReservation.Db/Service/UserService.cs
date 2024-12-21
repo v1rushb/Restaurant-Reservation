@@ -18,7 +18,7 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<User?> Authenticate(string username, string password)
+    public async Task<User?> AuthenticateUserAsync(string username, string password)
     {
         var storedUser = await _userRepository.GetUserByUsernameAsync(username);
         if (storedUser == null)
@@ -38,7 +38,7 @@ public class UserService : IUserService
 
     public async Task<User> CreateAsync(User newUser)
     {
-        if (await _userRepository.ContaninsUsernameAsync(newUser.Username))
+        if (await _userRepository.ContainsUsernameAsync(newUser.Username))
         {
             throw new UsernameDuplicateException(newUser.Username);
         }

@@ -4,6 +4,6 @@ namespace RestaurantReservation.Db.Service.Interfaces
 {
     public interface IUserService : IService<User>
     {
-        Task<User> Authenticate(string username, string password);
+        Task<User> AuthenticateUserAsync(string username, string password);
     }
 }
