@@ -39,11 +39,8 @@ namespace RestaurantReservation.Db.Repositories
             await _context.SaveChangesAsync();
         }
 
-        Task<bool> ExistsAsync(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
+        public async Task<bool> ExistsAsync(int userId) =>
+            await _context.Users.AnyAsync(user => user.Id.Equals(userId));
         async Task<bool> IRepository<User>.ExistsAsync(int userId) =>
             await _context.Users.AnyAsync(user => user.Id.Equals(userId));
         public async Task<List<User>> GetAllAsync(int page, int pageSize)
