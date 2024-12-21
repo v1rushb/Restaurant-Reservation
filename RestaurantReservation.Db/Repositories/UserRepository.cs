@@ -94,5 +94,8 @@ namespace RestaurantReservation.Db.Repositories
             _context.Users.Update(updatedUser);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> ContainsUsernameAsync(string username) =>
+            await _context.Users.AnyAsync(user => user.Username.Equals(username));
     }
 }
