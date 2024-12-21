@@ -6,6 +6,6 @@ namespace RestaurantReservation.Db.Repositories.Interfaces
     public interface IUserRepository : IRepository<User>
     {
         Task<User> GetUserByUsernameAsync(string username);
-        Task<bool> ContaninsUsernameAsync(string username);
+        Task<bool> ContainsUsernameAsync(string username);
     }
 }

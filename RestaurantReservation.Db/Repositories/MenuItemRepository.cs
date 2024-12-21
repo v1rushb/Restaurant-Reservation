@@ -16,6 +16,7 @@ namespace RestaurantReservation.Db.Repositories
         public async Task<MenuItem> CreateAsync(MenuItem newMenuItem)
         {
             var menuItem = await _context.MenuItems.AddAsync(newMenuItem);
+            await _context.SaveChangesAsync();
             return menuItem.Entity;
         }
 
